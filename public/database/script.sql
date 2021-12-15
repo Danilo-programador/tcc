@@ -68,11 +68,13 @@ CREATE TABLE vacina(
   a data que foi dado a vacina*/ 
 CREATE TABLE vacinacao(
         id INT AUTO_INCREMENT,
+        id_vacina INT NOT NULL,
         id_funcionario INT NOT NULL,
         id_usuario INT NOT NULL,
         id_clinica INT NOT NULL,
-        DATA DATE NOT NULL,
+        data_reserva DATE NOT NULL,
         PRIMARY KEY(id),
+        FOREIGN KEY(id_vacina) REFERENCES tipo_vacina(id),
         FOREIGN KEY(id_clinica) REFERENCES usuario(id),
         FOREIGN KEY(id_funcionario) REFERENCES  usuario(id),
         FOREIGN KEY(id_usuario) REFERENCES  usuario(id)
@@ -83,8 +85,8 @@ guardará a data, horario,id_usuaria,id_clinica
 */
 CREATE TABLE reserva(
        id INT AUTO_INCREMENT,
-       DATA DATE NOT NULL,
-       horario TIME NOT NULL,
+       data_nascimento DATE NOT NULL,
+       horario varchar(40) NOT NULL,
        id_usuario INT NOT NULL,
        id_clinica INT NOT null,
        PRIMARY KEY(id),
@@ -103,28 +105,16 @@ CREATE TABLE tipo_vac_reserva(
        FOREIGN KEY(id_reserva) REFERENCES reserva(id)
 );
 
-/*CREATE TABLE calendario_vacina(
-        id INT AUTO_INCREMENT,
-        dose VARCHAR(20) NOT NULL,
-        id_tipo_vacina INT NOT NULL,
-        PRIMARY KEY(id),
-        FOREIGN KEY(id_tipo_vacina) REFERENCES tipo_vacina(id)
-);
 
-CREATE TABLE faixa_etaria(
-       id INT AUTO_INCREMENT,
-       descricao VARCHAR(60),
-       mes_inicial DATE,
-       mes_final DATE,
-       id_calendario_vacina INT,
-       PRIMARY KEY(id),
-       FOREIGN KEY(id_calendario_vacina) REFERENCES calendario_vacina(id) 	
-);
+INSERT INTO usuario (email,senha,tipo) 
+VALUES ('adm@gmail.com',MD5('123'),'A');
 
-CREATE TABLE dose_vacina(
-        id INT AUTO_INCREMENT,
-        dose VARCHAR(7),
-        id_calendario_vacina INT,
-        PRIMARY KEY(id),
-        FOREIGN KEY(id_calendario_vacina) REFERENCES calendario_vacina(id)
-);*/
+insert into tipo_vacina(nome, descricao) values 
+    ('BCG (Bacilo Calmette-Guerin)', 'Previne as formas graves de tuberculose, principalmente miliar e meníngea'),
+    ('Hepatite B', 'Previne a hepatite do tipo B'),
+    ('Pentavalente (DTP/HB/Hib)', 'Previne difteria, tétano, coqueluche, hepatite B e meningite e infecções por HiB'),
+    ('VIP (Poliomielite inativada)', 'Previne poliomielite ou paralisia infantil'),
+    ('Pneumocócica 10V', 'Previne pneumonia, otite, meningite e outras doenças causadas pelo Pneumococo'),
+    ('Vacina rotavírus humano G1P1', 'Previne diarreia por rotavírus'),
+    ('Meningocócica C', 'conjugada Previne a doença meningocócica C'),
+    ('Tríplice Viral', 'Previne sarampo, caxumba e rubéola');
